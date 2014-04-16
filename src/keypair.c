@@ -23,21 +23,19 @@
    authors and should not be interpreted as representing official policies, either expressed
    or implied, of Ivo Smits.*/
 
-#include "common.c"
 #include <sodium/crypto_box_curve25519xsalsa20poly1305.h>
 #include <sodium/crypto_scalarmult_curve25519.h>
+#include <stdio.h>
 #include <time.h>
 #include <fcntl.h>
 
 int main() {
-	print_header();
-
 	unsigned char cpublickey[crypto_box_curve25519xsalsa20poly1305_PUBLICKEYBYTES];
 	unsigned char csecretkey[crypto_box_curve25519xsalsa20poly1305_SECRETKEYBYTES];
 	int i;
 
 	if (0 != crypto_box_curve25519xsalsa20poly1305_keypair(cpublickey, csecretkey))
-		errorexitp("crypto_box_keypair failed");
+		perror("crypto_box_keypair failed");
 
 	printf("SECRET: ");
 	for (i = 0; i < crypto_box_curve25519xsalsa20poly1305_SECRETKEYBYTES; i++) printf("%02x", csecretkey[i]);
