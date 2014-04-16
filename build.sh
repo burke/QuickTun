@@ -24,7 +24,7 @@ rm -rf out/ obj/ tmp/
 
 mkdir -p out
 echo Creating source archive...
-$tar --transform "s,^,quicktun-`cat version`/," -czf "out/quicktun-`cat version`.tgz" build.sh clean.sh debian src version --exclude "debian/data"
+$tar --transform "s,^,quicktun-`cat VERSION`/," -czf "out/quicktun-`cat VERSION`.tgz" build.sh clean.sh debian src VERSION --exclude "debian/data"
 
 mkdir -p obj tmp tmp/include
 
@@ -69,7 +69,7 @@ else
 	export CRYPTLIB="nacl"
 fi
 
-CFLAGS="$CFLAGS -DQT_VERSION=\"`cat version`\""
+CFLAGS="$CFLAGS -DQT_VERSION=\"`cat VERSION`\""
 
 echo Building combined binary...
 $cc $CFLAGS -c -DCOMBINED_BINARY	src/proto.nacltai.c	-o obj/proto.nacltai.o

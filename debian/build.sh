@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
-VERSION=`cat ../version`-0
+VERSION=`cat ../VERSION`-0
 ARCH=`dpkg --print-architecture`
 rm -r data 2>/dev/null || true
 cp -r static data
