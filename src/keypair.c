@@ -36,17 +36,8 @@ int main() {
 	unsigned char csecretkey[crypto_box_curve25519xsalsa20poly1305_SECRETKEYBYTES];
 	int i;
 
-	fprintf(stderr, "Please feed 32 bytes of random data to stdin.\n");
-	fprintf(stderr, "Example (slow but secure): quicktun.keypair < /dev/random\n");
-	fprintf(stderr, "Example (fast but insecure): quicktun.keypair < /dev/urandom\n");
-
-	int len = fread(csecretkey, 1, crypto_box_curve25519xsalsa20poly1305_SECRETKEYBYTES, stdin);
-	if (len < crypto_box_curve25519xsalsa20poly1305_SECRETKEYBYTES) return errorexitp("Error or end of file on STDIN");
-/*	char* b;
-	srand(time(NULL));
-	for (b = csecretkey; b < csecretkey + crypto_box_curve25519xsalsa20poly1305_SECRETKEYBYTES; b++) *b = rand() % 255;*/
-
-	crypto_scalarmult_curve25519_base(cpublickey, csecretkey);
+	if (0 != crypto_box_curve25519xsalsa20poly1305_keypair(cpublickey, csecretkey))
+		errorexitp("crypto_box_keypair failed");
 
 	printf("SECRET: ");
 	for (i = 0; i < crypto_box_curve25519xsalsa20poly1305_SECRETKEYBYTES; i++) printf("%02x", csecretkey[i]);
