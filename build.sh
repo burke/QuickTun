@@ -73,17 +73,15 @@ CFLAGS="$CFLAGS -DQT_VERSION=\"`cat version`\""
 
 echo Building combined binary...
 $cc $CFLAGS -c -DCOMBINED_BINARY	src/proto.raw.c		-o obj/proto.raw.o
-$cc $CFLAGS -c -DCOMBINED_BINARY	src/proto.nacl0.c	-o obj/proto.nacl0.o
 $cc $CFLAGS -c -DCOMBINED_BINARY	src/proto.nacltai.c	-o obj/proto.nacltai.o
 $cc $CFLAGS -c -DCOMBINED_BINARY	src/proto.salty.c	-o obj/proto.salty.o
 $cc $CFLAGS -c -DCOMBINED_BINARY	src/run.combined.c	-o obj/run.combined.o
 $cc $CFLAGS -c				src/common.c		-o obj/common.o
-$cc $CFLAGS -o out/quicktun.combined obj/common.o obj/run.combined.o obj/proto.raw.o obj/proto.nacl0.o obj/proto.nacltai.o obj/proto.salty.o -l$CRYPTLIB $LDFLAGS
+$cc $CFLAGS -o out/quicktun.combined obj/common.o obj/run.combined.o obj/proto.raw.o obj/proto.nacltai.o obj/proto.salty.o -l$CRYPTLIB $LDFLAGS
 ln out/quicktun.combined out/quicktun
 
 echo Building single protocol binaries...
 $cc $CFLAGS -o out/quicktun.raw		src/proto.raw.c				$LDFLAGS
-$cc $CFLAGS -o out/quicktun.nacl0	src/proto.nacl0.c	-l$CRYPTLIB	$LDFLAGS
 $cc $CFLAGS -o out/quicktun.nacltai	src/proto.nacltai.c	-l$CRYPTLIB	$LDFLAGS
 $cc $CFLAGS -o out/quicktun.salty	src/proto.salty.c	-l$CRYPTLIB	$LDFLAGS
 $cc $CFLAGS -o out/quicktun.keypair	src/keypair.c		-l$CRYPTLIB	$LDFLAGS
@@ -91,7 +89,7 @@ $cc $CFLAGS -o out/quicktun.keypair	src/keypair.c		-l$CRYPTLIB	$LDFLAGS
 if [ -f /etc/network/interfaces ]; then
 	echo Building debian binary...
 	$cc $CFLAGS -c -DCOMBINED_BINARY -DDEBIAN_BINARY src/run.combined.c -o obj/run.debian.o
-	$cc $CFLAGS -o out/quicktun.debian obj/common.o obj/run.debian.o obj/proto.raw.o obj/proto.nacl0.o obj/proto.nacltai.o obj/proto.salty.o -l$CRYPTLIB $LDFLAGS
+	$cc $CFLAGS -o out/quicktun.debian obj/common.o obj/run.debian.o obj/proto.raw.o obj/proto.nacltai.o obj/proto.salty.o -l$CRYPTLIB $LDFLAGS
 	if [ -x /usr/bin/dpkg-deb -a -x /usr/bin/fakeroot ]; then
 		echo -n Building debian package...
 		cd debian

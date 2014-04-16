@@ -11,7 +11,6 @@ if [ -n "${NACL_SHARED}" ]; then
 	sed "s/\\(Depends: .*\\)/\\1, libnacl | libnacl-ref | libnacl-build/" -i data/DEBIAN/control
 fi
 cp ../out/quicktun.raw data/usr/sbin/
-cp ../out/quicktun.nacl0 data/usr/sbin/
 cp ../out/quicktun.nacltai data/usr/sbin/
 cp ../out/quicktun.debian data/usr/sbin/
 cp ../out/quicktun.keypair data/usr/sbin/
