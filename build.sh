@@ -30,28 +30,15 @@ mkdir -p obj tmp tmp/include
 
 export LIBRARY_PATH="/usr/local/lib/:${LIBRARY_PATH}"
 
-echo '#include <sodium/crypto_box_curve25519xsalsa20poly1305.h>' > tmp/libtest1.c
-if $cc -shared -lsodium tmp/libtest1.c -o tmp/libtest 2>/dev/null; then
-	echo Using shared libsodium.
-else
-  echo "libsodium is required."
-  exit 1
-fi
-
-echo '#include <sodium/crypto_box_curve25519xsalsa20poly1305.h>' > tmp/include/crypto_box_curve25519xsalsa20poly1305.h
-echo '#include <sodium/crypto_scalarmult_curve25519.h>' > tmp/include/crypto_scalarmult_curve25519.h
-export CPATH="./tmp/include/:${CPATH}"
-export CRYPTLIB="sodium"
-
 CFLAGS="$CFLAGS -DQT_VERSION=\"`cat VERSION`\""
 
 echo Building binaries...
-$cc $CFLAGS -o out/quicktun	src/proto.nacltai.c	-l$CRYPTLIB	$LDFLAGS
-$cc $CFLAGS -o out/quicktun.keypair	src/keypair.c		-l$CRYPTLIB	$LDFLAGS
+$cc $CFLAGS -o out/quicktun	src/proto.nacltai.c	-lsodium $LDFLAGS
+$cc $CFLAGS -o out/quicktun.keypair	src/keypair.c		-lsodium $LDFLAGS
 
 if [ -f /etc/network/interfaces ]; then
 	echo Building debian binary...
-  $cc $CFLAGS -DDEBIAN_BINARY -o out/quicktun	src/proto.nacltai.c	-l$CRYPTLIB	$LDFLAGS
+  $cc $CFLAGS -DDEBIAN_BINARY -o out/quicktun	src/proto.nacltai.c	-lsodium $LDFLAGS
 	if [ -x /usr/bin/dpkg-deb -a -x /usr/bin/fakeroot ]; then
 		echo -n Building debian package...
 		cd debian

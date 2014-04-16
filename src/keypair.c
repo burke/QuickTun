@@ -24,8 +24,8 @@
    or implied, of Ivo Smits.*/
 
 #include "common.c"
-#include "crypto_box_curve25519xsalsa20poly1305.h"
-#include "crypto_scalarmult_curve25519.h"
+#include <sodium/crypto_box_curve25519xsalsa20poly1305.h>
+#include <sodium/crypto_scalarmult_curve25519.h>
 #include <time.h>
 #include <fcntl.h>
 
