@@ -92,17 +92,6 @@ struct qtsession {
 	void (*sendnetworkpacket)(struct qtsession* sess, char* msg, int len);
 };
 
-#ifdef COMBINED_BINARY
-	extern char* (*getconf)(const char*);
-	extern int errorexit(const char*);
-	extern int errorexitp(const char*);
-	extern void print_header();
-	extern void hex2bin(unsigned char*, const char*, const int);
-	extern int debug;
-	extern int qtrun(struct qtproto* p);
-	extern int qtprocessargs(int argc, char** argv);
-#else
-
 char* (*getconf)(const char*) = getenv;
 int debug = 0;
 static int gargc = 0;
@@ -122,7 +111,7 @@ int errorexitp(const char* text) {
 }
 
 void print_header() {
-	fprintf(stderr, "UCIS QuickTun "QT_VERSION" (c) 2010-2013 Ivo Smits <Ivo@UCIS.nl>\n");
+	fprintf(stderr, "UCIS QuickTun (c) 2010-2013 Ivo Smits <Ivo@UCIS.nl>\n");
 	fprintf(stderr, "More information: http://wiki.ucis.nl/QuickTun\n");
 }
 
@@ -475,7 +464,7 @@ int qtprocessargs(int argc, char** argv) {
 		if (!strcmp(a, "-h") || !strcmp(a, "--help")) {
 			return errorexit("Please read the documentation at http://wiki.ucis.nl/QuickTun");
 		} else if (!strcmp(a, "-v") || !strcmp(a, "--version")) {
-			return errorexit("UCIS QuickTun "QT_VERSION);
+			return errorexit("UCIS QuickTun");
 		} else if (!strcmp(a, "-c")) {
 			gargc = argc;
 			gargv = argv;
@@ -487,5 +476,4 @@ int qtprocessargs(int argc, char** argv) {
 	}
 	return 0;
 }
-#endif
 
