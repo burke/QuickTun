@@ -50,23 +50,6 @@ int main(int argc, char** argv) {
 	getconf = getenv;
 #endif
 	if (qtprocessargs(argc, argv) < 0) return -1;
-	char* envval;
-	if ((envval = getconf("PROTOCOL"))) {
-		if (strcmp(envval, "raw") == 0) {
-			return qtrun(&qtproto_raw);
-		} else if (strcmp(envval, "nacltai") == 0) {
-			return qtrun(&qtproto_nacltai);
-		} else if (strcmp(envval, "salty") == 0) {
-			return qtrun(&qtproto_salty);
-		} else {
-			return errorexit("Unknown PROTOCOL specified");
-		}
-	/* } else if (getconf("PRIVATE_KEY")) { */
-	/* 	fprintf(stderr, "Warning: PROTOCOL not specified, using insecure nacl0 protocol\n"); */
-	/* 	return qtrun(&qtproto_nacl0); */
-	} else {
-		fprintf(stderr, "Warning: PROTOCOL not specified, using insecure raw protocol\n");
-		return qtrun(&qtproto_raw);
-	}
+	return qtrun(&qtproto_nacltai);
 }
 
